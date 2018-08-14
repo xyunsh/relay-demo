@@ -1,0 +1,58 @@
+type Query {
+    queryResources:[Resource],
+    countResources: Int,
+    resource(id: ID!): Resource,
+
+    roles: [Role],
+    role(id: ID!): Role,
+
+    queryMenus: [Menu],
+    menu(id: ID!): Menu,
+
+    queryUsers: [User],
+    user(id: ID!): User
+}
+
+interface Identifiable {
+    id: ID!,
+}
+
+type Role implements Identifiable {
+    id: ID!,
+    name: String!,
+    rights: [Right]
+}
+
+type Menu implements Identifiable {
+    id: ID!,
+    title: String!,
+    icon: String,
+    path: String,
+    right: Right
+}
+
+type Resource implements Identifiable {
+    id: ID!,
+    name: String!,
+    slug: String!
+}
+
+type Privilege implements Identifiable {
+    id: ID!,
+    name: String!,
+    slug: String!
+}
+
+type Right implements Identifiable {
+    id: ID!,
+    privilege: Privilege!,
+    resource: Resource!
+}
+
+type User implements Identifiable {
+    id: ID!,
+    login_name: String!,
+    email: String,
+    display_name: String!,
+    roles: [Role]
+}
