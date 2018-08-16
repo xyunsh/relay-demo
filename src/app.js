@@ -24,7 +24,11 @@ const modernEnvironment = new Environment({
   store: new Store(new RecordSource())
 });
 
-class App extends React.Component {
+type Props = {
+
+}
+
+class App extends React.Component<Props> {
   render() {
     return (
       <QueryRenderer
