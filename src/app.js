@@ -4,6 +4,8 @@ import ReactDOM from "react-dom";
 import { QueryRenderer, graphql } from "react-relay";
 import { Environment, Network, RecordSource, Store } from "relay-runtime";
 
+import Rights from './Rights';
+
 function fetchQuery(operation, variables) {
   return fetch("http://localhost:3000/graphql", {
     method: "POST",
@@ -24,9 +26,7 @@ const modernEnvironment = new Environment({
   store: new Store(new RecordSource())
 });
 
-type Props = {
-
-}
+type Props = {};
 
 class App extends React.Component<Props> {
   render() {
@@ -36,8 +36,11 @@ class App extends React.Component<Props> {
         query={graphql`
           query appQuery {
             roles {
-              id,
+              id
               name
+              rights {
+                  ...Rights_items
+              }
             }
           }
         `}
@@ -50,11 +53,13 @@ class App extends React.Component<Props> {
           if (!props) {
             return <div>Loading...</div>;
           }
-
           return (
-            <ul>
-              {props.roles.map(({name,id})=><li key={id}>{name}</li>)}
-            </ul>
+            <dl>
+              {props.roles.map(({ name, id , rights}) => [
+                    <dt key={id}>{name}</dt>,
+                    <dd key={`${id}.rights`}><Rights items={rights}/></dd>
+              ])}
+            </dl>
           );
         }}
       />
@@ -62,7 +67,4 @@ class App extends React.Component<Props> {
   }
 }
 
-ReactDOM.render(
-  <App/>,
-  document.getElementById('root')
-);
+ReactDOM.render(<App />, document.getElementById("root"));
