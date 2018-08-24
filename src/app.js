@@ -33,6 +33,9 @@ class App extends React.Component<Props> {
     return (
       <QueryRenderer
         environment={modernEnvironment}
+        cacheConfig={{
+            force:true
+        }}
         query={graphql`
           query appQuery {
             roles {
@@ -41,6 +44,9 @@ class App extends React.Component<Props> {
               rights {
                   ...Rights_items
               }
+            }
+            queryResources {
+                ...Resource_item
             }
           }
         `}

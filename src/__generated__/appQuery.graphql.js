@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash cf23e5ffde13b8556ce4a44efcdf82c0
+ * @relayHash fa64def64a131e4053c7b62f76a44ca7
  */
 
 /* eslint-disable */
@@ -9,6 +9,7 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
+type Resource_item$ref = any;
 type Rights_items$ref = any;
 export type appQueryVariables = {||};
 export type appQueryResponse = {|
@@ -18,7 +19,10 @@ export type appQueryResponse = {|
     +rights: ?$ReadOnlyArray<?{|
       +$fragmentRefs: Rights_items$ref
     |}>,
-  |}>
+  |}>,
+  +queryResources: ?$ReadOnlyArray<?{|
+    +$fragmentRefs: Resource_item$ref
+  |}>,
 |};
 export type appQuery = {|
   variables: appQueryVariables,
@@ -37,11 +41,21 @@ query appQuery {
       id
     }
   }
+  queryResources {
+    ...Resource_item
+    id
+  }
 }
 
 fragment Rights_items on Right {
   id
   ...Right_item
+}
+
+fragment Resource_item on Resource {
+  id
+  name
+  slug
 }
 
 fragment Right_item on Right {
@@ -57,12 +71,6 @@ fragment Right_item on Right {
 }
 
 fragment Privilege_item on Privilege {
-  id
-  name
-  slug
-}
-
-fragment Resource_item on Resource {
   id
   name
   slug
@@ -100,7 +108,7 @@ return {
   "operationKind": "query",
   "name": "appQuery",
   "id": null,
-  "text": "query appQuery {\n  roles {\n    id\n    name\n    rights {\n      ...Rights_items\n      id\n    }\n  }\n}\n\nfragment Rights_items on Right {\n  id\n  ...Right_item\n}\n\nfragment Right_item on Right {\n  id\n  privilege {\n    ...Privilege_item\n    id\n  }\n  resource {\n    ...Resource_item\n    id\n  }\n}\n\nfragment Privilege_item on Privilege {\n  id\n  name\n  slug\n}\n\nfragment Resource_item on Resource {\n  id\n  name\n  slug\n}\n",
+  "text": "query appQuery {\n  roles {\n    id\n    name\n    rights {\n      ...Rights_items\n      id\n    }\n  }\n  queryResources {\n    ...Resource_item\n    id\n  }\n}\n\nfragment Rights_items on Right {\n  id\n  ...Right_item\n}\n\nfragment Resource_item on Resource {\n  id\n  name\n  slug\n}\n\nfragment Right_item on Right {\n  id\n  privilege {\n    ...Privilege_item\n    id\n  }\n  resource {\n    ...Resource_item\n    id\n  }\n}\n\nfragment Privilege_item on Privilege {\n  id\n  name\n  slug\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
@@ -135,6 +143,22 @@ return {
                 "args": null
               }
             ]
+          }
+        ]
+      },
+      {
+        "kind": "LinkedField",
+        "alias": null,
+        "name": "queryResources",
+        "storageKey": null,
+        "args": null,
+        "concreteType": "Resource",
+        "plural": true,
+        "selections": [
+          {
+            "kind": "FragmentSpread",
+            "name": "Resource_item",
+            "args": null
           }
         ]
       }
@@ -189,11 +213,21 @@ return {
             ]
           }
         ]
+      },
+      {
+        "kind": "LinkedField",
+        "alias": null,
+        "name": "queryResources",
+        "storageKey": null,
+        "args": null,
+        "concreteType": "Resource",
+        "plural": true,
+        "selections": v2
       }
     ]
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'cc1bfcc4a69ecbf001d52211e5ccaf30';
+(node/*: any*/).hash = '816295754bc2c250d507f9d6ec648d84';
 module.exports = node;
