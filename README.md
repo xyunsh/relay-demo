@@ -5,3 +5,7 @@ p.red { color: red; }
 </style>
 
 <p class="red">Red</p>
+
+```css
+p.red { color: red; }
+```
